@@ -6,8 +6,8 @@
  * @link       https://bmlt.app
  * @since      1.0.0
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/includes
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/includes
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/includes
  * @author     Ron Barack <otrok7@yahoo.com>
  */
-class Bread_Roboto_Loader {
+class Bread_Custom_Fonts_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

@@ -22,7 +22,7 @@
  * @link       https://bmlt.app
  * @since      1.0.0
  *
- * @package    Bread_Roboto
+ * @package    Bread_Cusqtom_Fonts
  */
 
 // If uninstall not called from WordPress, then exit.

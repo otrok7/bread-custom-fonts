@@ -8,8 +8,8 @@
  * @link       https://bmlt.app
  * @since      1.0.0
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/public/partials
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/public/partials
  */
 ?>
 

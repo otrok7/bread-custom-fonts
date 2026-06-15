@@ -9,8 +9,8 @@
  * @link       https://bmlt.app
  * @since      1.0.0
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/includes
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/includes
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/includes
  * @author     Ron Barack <otrok7@yahoo.com>
  */
-class Bread_Roboto {
+class Bread_Custom_Fonts {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Bread_Roboto {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Bread_Roboto_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Bread_Custom_Fonts_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -67,15 +67,14 @@ class Bread_Roboto {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'BREAD_ROBOTO_VERSION' ) ) {
-			$this->version = BREAD_ROBOTO_VERSION;
+		if ( defined( 'BREAD_CUSTOM_FONTS_VERSION' ) ) {
+			$this->version = BREAD_CUSTOM_FONTS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'bread-roboto';
+		$this->plugin_name = 'bread-custom-fonts';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
@@ -86,10 +85,10 @@ class Bread_Roboto {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Bread_Roboto_Loader. Orchestrates the hooks of the plugin.
-	 * - Bread_Roboto_i18n. Defines internationalization functionality.
-	 * - Bread_Roboto_Admin. Defines all hooks for the admin area.
-	 * - Bread_Roboto_Public. Defines all hooks for the public side of the site.
+	 * - Bread_Custom_Fonts_Loader. Orchestrates the hooks of the plugin.
+	 * - Bread_Custom_Fonts_i18n. Defines internationalization functionality.
+	 * - Bread_Custom_Fonts_Admin. Defines all hooks for the admin area.
+	 * - Bread_Custom_Fonts_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,43 +102,20 @@ class Bread_Roboto {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bread-roboto-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bread-roboto-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bread-custom-fonts-loader.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bread-roboto-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bread-custom-fonts-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bread-roboto-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bread-custom-fonts-public.php';
 
-		$this->loader = new Bread_Roboto_Loader();
-
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Bread_Roboto_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Bread_Roboto_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader = new Bread_Custom_Fonts_Loader();
 
 	}
 
@@ -152,13 +128,13 @@ class Bread_Roboto {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Bread_Roboto_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Bread_Custom_Fonts_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'bread_custom_fonts', $plugin_admin, 'bread_custom_fonts' );
-		$this->loader->add_filter( 'bread_content_scripts', $plugin_admin, 'bread_content_scripts' );
+		$this->loader->add_filter( 'bread_content_style', $plugin_admin, 'bread_content_style' );
 	}
 
 	/**
@@ -170,7 +146,7 @@ class Bread_Roboto {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Bread_Roboto_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Bread_Custom_Fonts_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -203,7 +179,7 @@ class Bread_Roboto {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Bread_Roboto_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Bread_Custom_Fonts_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

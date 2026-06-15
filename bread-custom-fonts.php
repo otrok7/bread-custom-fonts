@@ -10,10 +10,10 @@
  *
  * @link              https://bmlt.app
  * @since             1.0.0
- * @package           Bread_Roboto
+ * @package           Bread_Custom_Fonts
  *
  * @wordpress-plugin
- * Plugin Name:       bread-roboto
+ * Plugin Name:       bread-custom-fonts
  * Plugin URI:        https://bmlt.app
  * Description:       This is a description of the plugin.
  * Version:           1.0.0
@@ -21,7 +21,7 @@
  * Author URI:        https://bmlt.app/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       bread-roboto
+ * Text Domain:       bread-custom-fonts
  * Domain Path:       /languages
  */
 
@@ -35,34 +35,13 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'BREAD_ROBOTO_VERSION', '1.0.0' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-bread-roboto-activator.php
- */
-function activate_bread_roboto() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bread-roboto-activator.php';
-	Bread_Roboto_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-bread-roboto-deactivator.php
- */
-function deactivate_bread_roboto() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bread-roboto-deactivator.php';
-	Bread_Roboto_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_bread_roboto' );
-register_deactivation_hook( __FILE__, 'deactivate_bread_roboto' );
+define( 'BREAD_CUSTOM_FONTS_VERSION', '1.0.0' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-bread-roboto.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-bread-custom-fonts.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,10 +52,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-bread-roboto.php';
  *
  * @since    1.0.0
  */
-function run_bread_roboto() {
+function run_bread_custom_fonts() {
 
-	$plugin = new Bread_Roboto();
+	$plugin = new Bread_Custom_Fonts();
 	$plugin->run();
 
 }
-run_bread_roboto();
+run_bread_custom_fonts();

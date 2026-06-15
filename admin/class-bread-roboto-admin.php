@@ -6,8 +6,8 @@
  * @link       https://bmlt.app
  * @since      1.0.0
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/admin
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Bread_Roboto
- * @subpackage Bread_Roboto/admin
+ * @package    Bread_Custom_Fonts
+ * @subpackage Bread_Custom_Fonts/admin
  * @author     Ron Barack <otrok7@yahoo.com>
  */
-class Bread_Roboto_Admin {
+class Bread_Custom_Fonts_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Bread_Roboto_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Bread_Roboto_Loader as all of the hooks are defined
+		 * defined in Bread_Custom_Fonts_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Bread_Roboto_Loader will then create the relationship
+		 * The Bread_Custom_Fonts_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bread-roboto-admin.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bread-custom-fonts-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,24 +88,31 @@ class Bread_Roboto_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Bread_Roboto_Loader as all of the hooks are defined
+		 * defined in Bread_Custom_Fonts_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Bread_Roboto_Loader will then create the relationship
+		 * The Bread_Custom_Fonts_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bread-roboto-admin.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bread-custom-fonts-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 	public function bread_custom_fonts( $fonts ) {
 		$fonts['roboto'] = 'Roboto';
+		$fonts['rubik'] = 'Rubik';
+		$fonts['cairo'] = 'Cairo';
+		$fonts['riyaz'] = 'XB Riyaz';
+		$fonts['bnazanin'] = 'BNazanin';
+		$fonts['tahoma'] = 'Wine Tahoma';
+		$fonts['arimo'] = 'Arimo';
+		$fonts['amiri'] = 'Amiri';
 		return $fonts;
 	}
 	public function bread_content_style( $content_style ) {
                 $dir = plugin_dir_url(__FILE__);
-                $content_style .= "@import url('$dir/css/fonts.css')";
+                $content_style .= "@import url('$dir/css/fonts.css');";
                 return $content_style;
 	}
 }
