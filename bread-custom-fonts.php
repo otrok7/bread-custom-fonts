@@ -41,7 +41,7 @@ define( 'BREAD_CUSTOM_FONTS_VERSION', '1.0.0' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-bread-custom-fonts.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-bread-custom_fonts.php';
 
 /**
  * Begins execution of the plugin.
@@ -55,7 +55,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-bread-custom-fonts.php';
 function run_bread_custom_fonts() {
 
 	$plugin = new Bread_Custom_Fonts();
-	$plugin->run();
 
 }
 run_bread_custom_fonts();

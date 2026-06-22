@@ -12,7 +12,7 @@
  * @package    Bread_Custom_Fonts
  * @subpackage Bread_Custom_Fonts/includes
  */
-
+define('BREAD_CUSTOM_FONTS_OPTION', 'BreadCustomFontOption');
 /**
  * The core plugin class.
  *
@@ -27,172 +27,311 @@
  * @subpackage Bread_Custom_Fonts/includes
  * @author     Ron Barack <otrok7@yahoo.com>
  */
-class Bread_Custom_Fonts {
+class Bread_Custom_Fonts
+{
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Bread_Custom_Fonts_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
-
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function __construct() {
-		if ( defined( 'BREAD_CUSTOM_FONTS_VERSION' ) ) {
-			$this->version = BREAD_CUSTOM_FONTS_VERSION;
-		} else {
-			$this->version = '1.0.0';
+	private $options = [];
+	private $custom_fonts = [
+		'roboto' => [
+			'name' => 'Roboto',
+			'stack' => 'Sans-Serif - Neo-Grotesque',
+			'scripts' => ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Roboto" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Roboto_Condensed-Regular.ttf',
+				'B' => 'Roboto_Condensed-Bold.ttf',
+				'I' => 'Roboto_Condensed-Italic.ttf',
+				'BI' => 'Roboto_Condensed-BoldItalic.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'rubik' => [
+			'name' => 'Rubik',
+			'stack' => 'Sans-Serif - Neo-Grotesque',
+			'scripts' => ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'arabic'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Rubik" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Rubik-Regular.ttf',
+				'B' => 'Rubik-Bold.ttf',
+				'I' => 'Rubik-Italic.ttf',
+				'BI' => 'Rubik-BoldItalic.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'oswald' => [
+			'name' => 'Oswald',
+			'stack' => 'Sans-Serif - Neo-Grotesque',
+			'scripts' => ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Oswald" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Oswald-Regular.ttf',
+				'B' => 'Oswald-Bold.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'opensans' => [
+			'name' => 'Open Sans Condensed',
+			'stack' => 'Sans-Serif - Humanist',
+			'scripts' => ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Open+Sans" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'OpenSans_Condensed-Regular.ttf',
+				'B' => 'OpenSans_Condensed-Bold.ttf',
+				'I' => 'OpenSans_Condensed-Italic.ttf',
+				'BI' => 'OpenSans_Condensed-BoldItalic.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'arimo' => [
+			'name' => 'Arimo',
+			'stack' => 'Sans-Serif - Arial-like',
+			'scripts' => ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext', 'greek', 'hebrew'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Animo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Arimo-Regular.ttf',
+				'B' => 'Arimo-Bold.ttf',
+				'I' => 'Arimo-Italic.ttf',
+				'BI' => 'Arimo-BoldItalic.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'arvo' => [
+			'name' => 'Arvo',
+			'stack' => 'Slab-Serif',
+			'scripts' => ['latin', 'latin-ext'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Arvo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Arvo-Regular.ttf',
+				'B' => 'Arvo-Bold.ttf',
+				'I' => 'Arvo-Italic.ttf',
+				'BI' => 'Arvo-BoldItalic.ttf',
+			],
+			'configuration' => []
+		],
+		'cairo' => [
+			'name' => 'Cairo',
+			'stack' => 'Sans-Serif - Superellipse',
+			'scripts' => ['latin', 'latin-ext', 'arabic'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Cairo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Cairo-Regular.ttf',
+				'B' => 'Cairo-Bold.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'riyaz' => [
+			'name' => 'XB Riyaz',
+			'stack' => 'Sans-Serif - Superellipse',
+			'scripts' => ['latin', 'latin-ext', 'arabic'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Cairo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'XB_Riyaz.ttf',
+				'B' => 'XB_RiyazBd.ttf',
+				'I' => 'XB_RiyazBdIt.ttf',
+				'BI' => 'XB_RiyazBdIt.ttf',
+			],
+			'configuration' => [
+				'useOTL' => 0xFF,
+				'kashida' => 75,
+			]
+		],
+		'bnazanin' => [
+			'name' => 'B Nazanin',
+			'stack' => 'Sans-Serif - Superellipse',
+			'scripts' => ['latin', 'latin-ext', 'arabic'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Cairo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'BNazanin.ttf',
+				'B' => 'BNazaninBd.ttf',
+				'I' => 'BNazanin.ttf',
+				'BI' => 'BNazaninBd.ttf',
+			],
+			'configuration' => [
+				'kashida' => 75,
+			]
+		],
+		'tahoma' => [
+			'name' => 'B Nazanin',
+			'stack' => 'Sans-Serif - Superellipse',
+			'scripts' => ['latin', 'latin-ext', 'arabic'],
+			'specimen' => '<a href="https://fonts.google.com/specimen/Cairo" target="_blank">Google Fonts</a>',
+			'local' => [
+				'R' => 'Wine_Tahoma.ttf',
+				'B' => 'Wine_TahomaBd.ttf',
+				'I' => 'BNazanin.ttf',
+				'BI' => 'BNazaninBd.ttf',
+				//'useOTL' => 0xFF,
+				'useKashida' => 75,
+			],
+			'configuration' => [
+				'kashida' => 75,
+			]
+		],
+	];
+	public function __construct()
+	{
+		$this->options = get_option(BREAD_CUSTOM_FONTS_OPTION, ['active' => []]);
+		foreach ($this->custom_fonts as $key => &$font) {
+			$font['actions'] = $this->calcActions($key);
 		}
-		$this->plugin_name = 'bread-custom-fonts';
-
-		$this->load_dependencies();
-		$this->define_admin_hooks();
-		$this->define_public_hooks();
-
+		$this->addAdminHooks();
+		$this->addPublicHooks();
 	}
-
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Bread_Custom_Fonts_Loader. Orchestrates the hooks of the plugin.
-	 * - Bread_Custom_Fonts_i18n. Defines internationalization functionality.
-	 * - Bread_Custom_Fonts_Admin. Defines all hooks for the admin area.
-	 * - Bread_Custom_Fonts_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function load_dependencies() {
-
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bread-custom-fonts-loader.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bread-custom-fonts-admin.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bread-custom-fonts-public.php';
-
-		$this->loader = new Bread_Custom_Fonts_Loader();
-
+	public function addAdminHooks()
+	{
+		add_filter('bread_custom_fonts', [$this, 'bread_custom_fonts']);
+		add_filter('bread_content_style', [$this, 'bread_content_style']);
+		add_filter('Bread_active_fonts', [$this, 'bread_active_fonts']);
 	}
-
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_admin_hooks() {
-
-		$plugin_admin = new Bread_Custom_Fonts_Admin( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
-		$this->loader->add_filter( 'bread_custom_fonts', $plugin_admin, 'bread_custom_fonts' );
-		$this->loader->add_filter( 'bread_content_style', $plugin_admin, 'bread_content_style' );
+	public function addPublicHooks()
+	{
+		add_filter("Bread_Mpdf_Init_Options", [$this, 'mpdf_init_options']);
 	}
-
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-
-		$plugin_public = new Bread_Custom_Fonts_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-		$this->loader->add_filter( "Bread_Mpdf_Init_Options", $plugin_public, 'mpdf_init_options' );
-
+	public function bread_custom_fonts($fonts)
+	{
+		return array_merge($fonts, $this->custom_fonts);
 	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
+	private function getLocalDirectory($url = false)
+	{
+		$dir = $url ? plugin_dir_url(__FILE__) : __DIR__;
+		return trailingslashit($dir) . 'fonts';
 	}
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
+	public function bread_active_fonts(array $fonts): array
+	{
+		foreach(array_keys($this->custom_fonts) as $key) {
+			$i = array_search($key, $fonts);
+			if ($i !== false) {
+				array_splice($fonts, $i, 1);
+			}
+		}
+		return array_merge($fonts, $this->getActiveFonts());
 	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Bread_Custom_Fonts_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
+	private function getActiveFonts()
+	{
+		return $this->options['active'];
 	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
+	public function activateFont(string $fontFamily)
+	{
+		if (!current_user_can('manage_options')) {
+			$this->outputWarning("You must be an administrator to activate fonts");
+			return;
+		}
+		if (!isset($this->custom_fonts[$fontFamily])) {
+			$this->outputWarning("$fontFamily not in list of defined fonts");
+			return;
+		}
+		if (in_array($fontFamily, $this->getActiveFonts())) {
+			$this->outputWarning("$fontFamily already active");
+			return;
+		}
+		$this->options['active'][] = $fontFamily;
+		update_option(BREAD_CUSTOM_FONTS_OPTION, $this->options);
+		$this->outputSuccess("Font $fontFamily activated");
 	}
-
+	private function outputWarning($str)
+	{
+		wp_redirect(admin_url('admin.php?page=bmlt-enabled-bread&fontAction=warning&message=' . rawurlencode($str) . '&nonce=' . wp_create_nonce('bread_font_action')));
+		exit;
+	}
+	private function outputSuccess($str)
+	{
+		wp_redirect(admin_url('admin.php?page=bmlt-enabled-bread&fontAction=success&message=' . rawurlencode($str) . '&nonce=' . wp_create_nonce('bread_font_action')));
+		exit;
+	}
+	public function deactivateFont($fontFamily)
+	{
+		if (!current_user_can('manage_options')) {
+			$this->outputWarning("You must be an administrator to deactivate fonts");
+			return;
+		}
+		unset($this->options['active'][$fontFamily]);
+		update_option(BREAD_CUSTOM_FONTS_OPTION, $this->options);
+		$this->outputSuccess("Font $fontFamily removed.");
+	}
+	public function bread_content_style($content_style)
+	{
+		foreach ($this->getActiveFonts() as $font) {
+			$fontInfo = $this->custom_fonts[$font];
+			$dir = trailingslashit($this->getLocalDirectory(true));
+			foreach (['R', 'B', 'I', 'BI'] as $key) {
+				if (!isset($fontInfo['local'][$key])) {
+					continue;
+				}
+				$loc = $dir . rawurlencode($fontInfo['local'][$key]);
+				$content_style .= "@font-face {";
+				$content_style .= "font-family: $font;";
+				$content_style .= "src:url($loc) format('truetype');";
+				$content_style .= "font-display: block;";
+				if ($key == 'B' || $key == 'BI') {
+					$content_style .= "font-weight: bold;";
+				}
+				if ($key == 'I' || $key == 'BI') {
+					$content_style .= "font-style: italic;";
+				}
+				$content_style .= "}";
+			}
+		}
+		return $content_style;
+	}
+	function calcActions($font)
+	{
+		if (in_array($font, $this->getActiveFonts())) {
+			return [
+				'deactivatefont' => [
+					'text' => __('deactivate', 'bread'),
+					'action' => 'deactivatefont',
+					'lambda' => [$this, 'deactivateFont']
+				]
+			];
+		} else {
+			return [
+				'activatefont' => [
+					'text' => __('Activate', 'bread'),
+					'action' => 'activatefont',
+					'lambda' => [$this, 'activateFont']
+				]
+			];
+		}
+	}
+	public function mpdf_init_options($options)
+	{
+		$fontDirs = $options['fontDir'] ?? [];
+		$fontdata = $options['fontdata'] ?? [];
+		foreach ($this->getActiveFonts() as $fontKey) {
+			$fontDirs[] = $this->getLocalDirectory();
+			$info = $this->custom_fonts[$fontKey];
+			$fontdata[$fontKey] = [];
+			foreach (['R', 'B', 'I', 'BI'] as $style) {
+				if (isset($info['local'][$style])) {
+					$fontdata[$fontKey][$style] = $info['local'][$style];
+				}
+			}
+			if (isset($info['configuration'])) {
+				foreach ($info['configuration'] as $key => $value) {
+					$fontdata[$fontKey][$key] = $value;
+				}
+			}
+		}
+		$options['fontDir'] = $fontDirs;
+		$options['fontdata'] = $fontdata;
+		return $options;
+	}
 }
